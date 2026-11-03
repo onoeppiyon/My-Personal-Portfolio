@@ -39,15 +39,15 @@
       <button type="button" data-filter="landscape" aria-pressed="false">Landscape</button>
     </div>
     <div class="work" id="work"></div>
-    </div>
   </section>
 </main>
 
 <footer>© 2026 Krizia Anne Pingol. All rights reserved.</footer>
 
 <script>
-
-var src = encodeURI(p.file);
+// Photo files sit in the same folder as this page (no "photos" folder).
+// Each photo can have a title and a photographer name (both optional).
+var photos = {
   trees: [
     { file: "japanese-maple.png", title: "Japanese Maple", photographer: "Richard Wong" },
     { file: "sunrise-oak.png", title: "Sunrise Oak", photographer: "Jess Lee" },
@@ -103,6 +103,7 @@ var src = encodeURI(p.file);
   var cats = ["trees","birds","fishes","fruits","flowers","mammals","landscape"];
   var work = document.getElementById("work");
 
+  // ----- Full-size viewer (lightbox) -----
   var box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
@@ -140,6 +141,7 @@ var src = encodeURI(p.file);
     if (!box.hidden && e.key === "Escape") closeBox();
   });
 
+  // ----- Photo grid -----
   cats.forEach(function(c, ci){
     var label = c.charAt(0).toUpperCase() + c.slice(1);
     for (var i = 1; i <= 5; i++) {
@@ -154,7 +156,7 @@ var src = encodeURI(p.file);
 
       var cover = document.createElement("div");
       if (hasPhoto) {
-        var src = "photos/" + encodeURI(p.file);
+        var src = encodeURI(p.file);
         cover.className = "cover has-photo";
         var img = document.createElement("img");
         img.src = src;
