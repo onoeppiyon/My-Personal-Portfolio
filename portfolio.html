@@ -46,12 +46,8 @@
 <footer>© 2026 Krizia Anne Pingol. All rights reserved.</footer>
 
 <script>
-// ADD YOUR PHOTOS HERE. Put the image files in a folder called "photos", then list them per tab.
-// Each photo can have a title and a photographer name (both optional):
-//   trees: [ { file: "oak.jpg", title: "Old Oak", photographer: "Jane Doe" } ]
-// A plain file name also works:  trees: ["oak.jpg"]  (the title then defaults to the tab name).
-// Up to 5 per tab; empty spots stay as placeholders.
-var photos = {
+
+var src = encodeURI(p.file);
   trees: [
     { file: "japanese-maple.png", title: "Japanese Maple", photographer: "Richard Wong" },
     { file: "sunrise-oak.png", title: "Sunrise Oak", photographer: "Jess Lee" },
@@ -107,7 +103,6 @@ var photos = {
   var cats = ["trees","birds","fishes","fruits","flowers","mammals","landscape"];
   var work = document.getElementById("work");
 
-  // ----- Full-size viewer (lightbox) -----
   var box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
@@ -145,7 +140,6 @@ var photos = {
     if (!box.hidden && e.key === "Escape") closeBox();
   });
 
-  // ----- Photo grid -----
   cats.forEach(function(c, ci){
     var label = c.charAt(0).toUpperCase() + c.slice(1);
     for (var i = 1; i <= 5; i++) {
