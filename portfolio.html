@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Photo Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="about.html" aria-label="About me"><img src="profile.jpg" alt="Profile photo"></a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About me</a>
+      <a href="portfolio.html" aria-current="page">Portfolio</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="view active" id="view-portfolio" aria-labelledby="t-portfolio">
+    <div class="page-head">
+      <h1 id="t-portfolio">Photo Gallery</h1>
+      <p class="lead">A selection of nature studies, sorted by subject.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter projects">
+      <button type="button" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" data-filter="trees" aria-pressed="false">Trees</button>
+      <button type="button" data-filter="birds" aria-pressed="false">Birds</button>
+      <button type="button" data-filter="fishes" aria-pressed="false">Fishes</button>
+      <button type="button" data-filter="fruits" aria-pressed="false">Fruits</button>
+      <button type="button" data-filter="flowers" aria-pressed="false">Flowers</button>
+      <button type="button" data-filter="mammals" aria-pressed="false">Mammals</button>
+      <button type="button" data-filter="landscape" aria-pressed="false">Landscape</button>
+    </div>
+    <div class="work" id="work"></div>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Krizia Anne Pingol. All rights reserved.</footer>
+
+<script>
+// ADD YOUR PHOTOS HERE. Put the image files in a folder called "photos", then list them per tab.
+// Each photo can have a title and a photographer name (both optional):
+//   trees: [ { file: "oak.jpg", title: "Old Oak", photographer: "Jane Doe" } ]
+// A plain file name also works:  trees: ["oak.jpg"]  (the title then defaults to the tab name).
+// Up to 5 per tab; empty spots stay as placeholders.
+var photos = {
+  trees: [
+    { file: "japanese-maple.png", title: "Japanese Maple", photographer: "Richard Wong" },
+    { file: "sunrise-oak.png", title: "Sunrise Oak", photographer: "Jess Lee" },
+    { file: "oak-tunnel-road.png", title: "Oak Tunnel Road", photographer: "Joseph Filer" },
+    { file: "red-maple-reflection.png", title: "Red Maple Reflection", photographer: "Derek Nielsen" },
+    { file: "oak-black-and-white.png", title: "Oak in Black and White", photographer: "Kieth Dotson" }
+  ],
+  birds: [
+    { file: "lilac-breasted-roller-flight.png", title: "Lilac-breasted Roller in Flight", photographer: "Nick Dale" },
+    { file: "peacock.png", title: "Peacock", photographer: "Joseph Filer" },
+    { file: "northern-flicker.png", title: "Northern Flicker", photographer: "Bryan Maltais" },
+    { file: "lilac-breasted-roller-perched.png", title: "Lilac-breasted Roller", photographer: "Kevin Pepper" },
+    { file: "malachite-kingfisher.png", title: "Malachite Kingfisher", photographer: "Edward Selfe" }
+  ],
+  fishes: [
+    { file: "wide-eyed-fish.png", title: "Wide-Eyed Fish" },
+    { file: "clownfish.png", title: "Clownfish" },
+    { file: "mahi-mahi.png", title: "Mahi-Mahi" },
+    { file: "blue-tang.png", title: "Blue Tang" },
+    { file: "hammerhead-shark.png", title: "Hammerhead Shark" }
+  ],
+  fruits: [
+    { file: "apples.png", title: "Apples" },
+    { file: "kiwi.png", title: "Kiwi" },
+    { file: "grapes.png", title: "Grapes" },
+    { file: "bananas.png", title: "Bananas" },
+    { file: "kumquats.png", title: "Kumquats" }
+  ],
+  flowers: [
+    { file: "roses.png", title: "Roses" },
+    { file: "sunflowers.png", title: "Sunflowers" },
+    { file: "tulips.png", title: "Tulips" },
+    { file: "bougainvillea.png", title: "Bougainvillea" },
+    { file: "ixora.png", title: "Ixora" }
+  ],
+  mammals: [
+    { file: "red-fox.png", title: "Red Fox" },
+    { file: "seal-pup.png", title: "Seal Pup" },
+    { file: "white-rhino.png", title: "White Rhino and Calf" },
+    { file: "wallaby-joey.png", title: "Wallaby and Joey" },
+    { file: "mink.png", title: "American Mink" }
+  ],
+  landscape: [
+    { file: "alpine-peak-dusk.png", title: "Alpine Peak at Dusk", photographer: "Jack Brauer" },
+    { file: "turquoise-lake.png", title: "Turquoise Alpine Lake", photographer: "Zoner Studio" },
+    { file: "mountain-reflection-bw.png", title: "Mountain Reflection in Black and White", photographer: "Kristen Ryan" },
+    { file: "walled-harbor-sunrise.png", title: "Walled Harbor at Sunrise", photographer: "Mickey Shannon" },
+    { file: "palm-beach-sunrise.png", title: "Palm Beach Sunrise", photographer: "Scott Smorra" }
+  ]
+};
+
+(function(){
+  var cats = ["trees","birds","fishes","fruits","flowers","mammals","landscape"];
+  var work = document.getElementById("work");
+
+  // ----- Full-size viewer (lightbox) -----
+  var box = document.createElement("div");
+  box.className = "lightbox";
+  box.hidden = true;
+  box.setAttribute("role", "dialog");
+  box.setAttribute("aria-modal", "true");
+  box.setAttribute("aria-label", "Full size photo");
+  var boxImg = document.createElement("img");
+  var closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "lightbox-close";
+  closeBtn.setAttribute("aria-label", "Close");
+  closeBtn.innerHTML = "&times;";
+  box.appendChild(closeBtn);
+  box.appendChild(boxImg);
+  document.body.appendChild(box);
+  var opener = null;
+
+  function openBox(src, alt, from) {
+    opener = from;
+    boxImg.src = src;
+    boxImg.alt = alt;
+    box.hidden = false;
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+  function closeBox() {
+    box.hidden = true;
+    boxImg.removeAttribute("src");
+    document.body.style.overflow = "";
+    if (opener) opener.focus();
+  }
+  closeBtn.addEventListener("click", closeBox);
+  box.addEventListener("click", function(e){ if (e.target === box) closeBox(); });
+  document.addEventListener("keydown", function(e){
+    if (!box.hidden && e.key === "Escape") closeBox();
+  });
+
+  // ----- Photo grid -----
+  cats.forEach(function(c, ci){
+    var label = c.charAt(0).toUpperCase() + c.slice(1);
+    for (var i = 1; i <= 5; i++) {
+      var p = (photos[c] || [])[i - 1];
+      if (typeof p === "string") p = { file: p };
+      var hasPhoto = p && p.file;
+      var title = (p && p.title) || label;
+
+      var card = document.createElement(hasPhoto ? "button" : "div");
+      card.className = "project";
+      card.setAttribute("data-cat", c);
+
+      var cover = document.createElement("div");
+      if (hasPhoto) {
+        var src = "photos/" + encodeURI(p.file);
+        cover.className = "cover has-photo";
+        var img = document.createElement("img");
+        img.src = src;
+        img.alt = title;
+        img.loading = "lazy";
+        cover.appendChild(img);
+        card.type = "button";
+        card.setAttribute("aria-label", "View " + title + " full size");
+        (function(src, title, card){
+          card.addEventListener("click", function(){ openBox(src, title, card); });
+        })(src, title, card);
+      } else {
+        cover.className = "cover c" + (((ci + i) % 4) + 1);
+        cover.setAttribute("role", "img");
+        cover.setAttribute("aria-label", label + " photo " + i + " placeholder");
+      }
+      card.appendChild(cover);
+
+      var cap = document.createElement("div");
+      cap.className = "caption";
+      var h = document.createElement("strong");
+      h.textContent = title;
+      cap.appendChild(h);
+      if (p && p.photographer) {
+        var by = document.createElement("span");
+        by.textContent = "Photographer: " + p.photographer;
+        cap.appendChild(by);
+      }
+      card.appendChild(cap);
+      work.appendChild(card);
+    }
+  });
+
+  document.querySelectorAll(".filters button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".filters button").forEach(function(x){ x.setAttribute("aria-pressed", x === b); });
+      var f = b.dataset.filter;
+      document.querySelectorAll(".project").forEach(function(p){
+        p.hidden = !(f === "all" || p.dataset.cat === f);
+      });
+    });
+  });
+})();
+</script>
+<script src="bg.js"></script>
+</body>
+</html>

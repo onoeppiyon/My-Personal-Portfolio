@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Contact Me!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="about.html" aria-label="About me"><img src="profile.jpg" alt="Profile photo"></a>
+    <nav aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="about.html">About me</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="view active" id="view-contact" aria-labelledby="t-contact">
+    <div class="page-head">
+      <h1 id="t-contact">Contact</h1>
+      <p class="lead">Have a project in mind? Tell me about it and I'll reply within two working days.</p>
+    </div>
+    <div class="contact-grid">
+      <div>
+        <form id="contact-form" novalidate>
+          <label for="name">Your name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+          <label for="email">Email address</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <label for="topic">What do you need?</label>
+          <select id="topic" name="topic">
+            <option>A new website</option>
+            <option>A web app</option>
+            <option>Branding</option>
+            <option>Something else</option>
+          </select>
+          <label for="msg">Message</label>
+          <textarea id="msg" name="msg" required></textarea>
+          <button class="btn primary" type="submit">Send message</button>
+          <div class="note" id="note" role="status" hidden></div>
+        </form>
+      </div>
+      <dl class="side">
+        <dt>Email</dt><dd><a href="mailto:pkriziaanne28@gmail.com">pkriziaanne28@gmail.com</a></dd>
+        <dt>Based in</dt><dd>Metro Manila, Philippines</dd>
+        <dt>Availability</dt><dd>Taking new projects from next month</dd>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 Krizia Anne Pingol. All rights reserved.</footer>
+
+<script>
+(function(){
+  var form = document.getElementById("contact-form"), note = document.getElementById("note");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var n = form.name.value.trim(), m = form.email.value.trim(), t = form.msg.value.trim();
+    note.hidden = false;
+    if (!n || !/^\S+@\S+\.\S+$/.test(m) || !t) {
+      note.style.borderColor = "var(--err)";
+      note.textContent = "Add your name, a valid email address, and a message, then send again.";
+      return;
+    }
+    note.style.borderColor = "var(--ok)";
+    note.textContent = "Thanks, " + n + ". Your message is ready. This demo form doesn't send yet, so connect it to a form service before going live.";
+    form.reset();
+  });
+})();
+</script>
+<script src="bg.js"></script>
+</body>
+</html>
