@@ -45,8 +45,7 @@
 <footer>© 2026 Krizia Anne Pingol. All rights reserved.</footer>
 
 <script>
-// Photo files sit in the same folder as this page (no "photos" folder).
-// Each photo can have a title and a photographer name (both optional).
+
 var photos = {
   trees: [
     { file: "japanese-maple.png", title: "Japanese Maple", photographer: "Richard Wong" },
@@ -103,7 +102,6 @@ var photos = {
   var cats = ["trees","birds","fishes","fruits","flowers","mammals","landscape"];
   var work = document.getElementById("work");
 
-  // ----- Full-size viewer (lightbox) -----
   var box = document.createElement("div");
   box.className = "lightbox";
   box.hidden = true;
@@ -141,7 +139,6 @@ var photos = {
     if (!box.hidden && e.key === "Escape") closeBox();
   });
 
-  // ----- Photo grid -----
   cats.forEach(function(c, ci){
     var label = c.charAt(0).toUpperCase() + c.slice(1);
     for (var i = 1; i <= 5; i++) {
